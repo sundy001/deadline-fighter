@@ -42,3 +42,4 @@ next-env.d.ts
 /heic/
 /public/jpg
 /report.json
+/.cache/
