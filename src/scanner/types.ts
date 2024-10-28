@@ -1,5 +1,6 @@
 export type AtlasResult = {
   line: string;
+  index: number;
   matchLevel: number; // 0: exact match, 1: fuzzy match
 };
 

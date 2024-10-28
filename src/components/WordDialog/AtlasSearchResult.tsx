@@ -17,7 +17,7 @@ type Props = {
 export function AtlasSearchResult({ className, atlasResult, word }: Props) {
   return (
     <div className={cn("flex flex-col gap-1", className)}>
-      {atlasResult.map(({ line }, index) => (
+      {atlasResult.map(({ line, index }) => (
         <AtlasPreviewButton key={index} link={atlasLinks[index]}>
           <Highlighter
             highlightClassName="bg-yellow-200"

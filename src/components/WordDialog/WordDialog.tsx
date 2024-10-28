@@ -17,8 +17,8 @@ import { RegionalChart } from "../RegionalChart";
 import { WordForm } from "./WordForm";
 import { RegionalMap } from "../RegionalMap";
 import { type AtlasResult } from "@/scanner";
-import { Archive, ChevronLeft, ChevronRight } from "lucide-react";
-import { loadWord, setIsArchive } from "@/features/localStorage/localStorage";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { loadWord } from "@/features/localStorage/localStorage";
 
 type Props = {
   atlasResult: AtlasResult[];
