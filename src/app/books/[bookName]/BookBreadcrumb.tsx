@@ -14,7 +14,7 @@ type Props = {
 
 export function BookBreadcrumb({ bookName, sectionName }: Props) {
   return (
-    <Breadcrumb>
+    <Breadcrumb className="mb-4">
       <BreadcrumbList>
         <BreadcrumbItem>
           <Link href={`/books`}>Books</Link>

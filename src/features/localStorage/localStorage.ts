@@ -45,12 +45,12 @@ export function saveWord(word: string, data: WordFormData) {
   localStorage.setItem(STORAGE_KEY, compress(JSON.stringify(words)));
 }
 
-export function archiveWord(word: string) {
+export function setIsArchive(word: string, value: boolean) {
   const words = loadWords();
   if (words[word]) {
-    words[word].isArchived = true;
+    words[word].isArchived = value;
   } else {
-    words[word] = { note: "", selectedRegions: [], isArchived: true };
+    words[word] = { note: "", selectedRegions: [], isArchived: value };
   }
 
   localStorage.setItem(STORAGE_KEY, compress(JSON.stringify(words)));

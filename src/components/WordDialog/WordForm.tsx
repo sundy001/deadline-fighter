@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label";
 import { REGION } from "@/data";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { cn } from "@/utils";
-import { Textarea } from "../ui/textarea";
+import { Textarea } from "@/components/ui/textarea";
 import { loadWord } from "@/features/localStorage";
 
 type Props = {
