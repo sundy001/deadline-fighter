@@ -1,4 +1,5 @@
 "use client";
+import { ArchiveButton } from "@/components/ArchiveButton";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -16,7 +17,8 @@ import { RegionalChart } from "../RegionalChart";
 import { WordForm } from "./WordForm";
 import { RegionalMap } from "../RegionalMap";
 import { type AtlasResult } from "@/scanner";
-import { saveWord } from "@/features/localStorage";
+import { Archive, ChevronLeft, ChevronRight } from "lucide-react";
+import { loadWord, setIsArchive } from "@/features/localStorage/localStorage";
 
 type Props = {
   atlasResult: AtlasResult[];
@@ -24,28 +26,24 @@ type Props = {
   sectionName: string;
   word: string;
   onRequestClose: () => void;
+  nextWord: () => void;
+  previousWord: () => void;
 };
 
 export function WordDialog({
-  onRequestClose,
   atlasResult,
   bookName,
   sectionName,
   word,
+  onRequestClose,
+  nextWord,
+  previousWord,
 }: Props) {
+  const formData = loadWord(word);
   const formRef = useRef<HTMLFormElement>(null);
   const [hoverRegion, setHoverRegion] = useState<string | undefined>();
   const [selectedIndexes, setSelectedIndexes] = useState<number[]>([]);
   const [isOCRDialogOpen, setIsOCRDialogOpen] = useState(false);
-
-  function getFormData() {
-    const formData = new FormData(formRef.current!);
-    const note = formData.get("note") as string;
-    const selectedRegions = [
-      ...formRef.current!.querySelectorAll('button[data-state="on"]'),
-    ].map((element) => element.textContent!);
-    return { note, selectedRegions };
-  }
 
   return (
     <>
@@ -98,6 +96,7 @@ export function WordDialog({
               <WordForm
                 ref={formRef}
                 word={word}
+                formData={formData}
                 onHoverChange={(word) => {
                   setHoverRegion(word);
                 }}
@@ -113,24 +112,27 @@ export function WordDialog({
             >
               Check Page
             </Button>
+            <ArchiveButton
+              word={word}
+              variant="secondary"
+              showText={true}
+              refresh={() => {}}
+            />
             <Button
               variant="secondary"
               onClick={() => {
-                const { note, selectedRegions } = getFormData();
-                saveWord(word, { note, selectedRegions, isArchived: true });
-                onRequestClose();
+                previousWord();
               }}
             >
-              Archive
+              <ChevronLeft />
             </Button>
             <Button
+              variant="secondary"
               onClick={() => {
-                const { note, selectedRegions } = getFormData();
-                saveWord(word, { note, selectedRegions, isArchived: false });
-                onRequestClose();
+                nextWord();
               }}
             >
-              Confirm
+              <ChevronRight />
             </Button>
           </DialogFooter>
         </DialogContent>

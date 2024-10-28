@@ -11,6 +11,8 @@ type Props = {
   sectionName: string;
   word: string;
   refresh: () => void;
+  nextWord: () => void;
+  previousWord: () => void;
 };
 
 export function WordButton({
@@ -19,6 +21,8 @@ export function WordButton({
   sectionName,
   word,
   refresh,
+  nextWord,
+  previousWord,
 }: Props) {
   const [open, setOpen] = useState(false);
   useEffect(() => {
@@ -43,6 +47,8 @@ export function WordButton({
           bookName={bookName}
           sectionName={sectionName}
           word={word}
+          nextWord={nextWord}
+          previousWord={previousWord}
           onRequestClose={() => {
             setOpen(false);
           }}

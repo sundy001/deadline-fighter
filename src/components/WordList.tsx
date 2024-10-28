@@ -1,13 +1,12 @@
 "use client";
 import { type Word } from "@/scanner";
-import { ArchiveButton } from "./ArchiveButton";
+import { ArchiveButton } from "@/components/ArchiveButton";
 import { WordButton } from "./WordDialog/WordButton";
 import { cn } from "@/utils";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
 import { loadWord } from "@/features/localStorage";
-import { UnarchiveButton } from "./UnarchiveButton";
 
 type Props = {
   className?: string;
@@ -68,12 +67,10 @@ export function WordList({ className, bookName, sectionName, words }: Props) {
                   sectionName={sectionName}
                   word={word}
                   refresh={refresh}
+                  nextWord={() => {}}
+                  previousWord={() => {}}
                 />
-                {isArchive ? (
-                  <UnarchiveButton refresh={refresh} word={word} />
-                ) : (
-                  <ArchiveButton refresh={refresh} word={word} />
-                )}
+                <ArchiveButton word={word} variant="ghost" refresh={refresh} />
               </td>
             </tr>
           ))}

@@ -66,7 +66,12 @@ export function OCRResultViewer({ bookName, sectionName, pages, word }: Props) {
           {cleanupPages.map(({ name, wordOverlays }, index) => (
             <CarouselItem key={index}>
               <div className="h-[calc(100svh-20rem)] overflow-auto">
-                <OCRImageViewer name={name} wordOverlays={wordOverlays} />
+                <OCRImageViewer
+                  bookName={bookName}
+                  sectionName={sectionName}
+                  name={name}
+                  wordOverlays={wordOverlays}
+                />
               </div>
             </CarouselItem>
           ))}

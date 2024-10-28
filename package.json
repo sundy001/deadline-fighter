@@ -39,7 +39,8 @@
     "stopwords-de": "^0.3.0",
     "svg-parser": "^2.0.4",
     "tailwind-merge": "^2.5.4",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "throttle-debounce": "^5.0.2"
   },
   "devDependencies": {
     "@types/bun": "^1.1.12",

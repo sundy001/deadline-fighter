@@ -1,5 +1,5 @@
 "use client";
-import { forwardRef, RefObject, useRef } from "react";
+import { forwardRef, useRef } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { REGION } from "@/data";
@@ -7,10 +7,13 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { cn } from "@/utils";
 import { Textarea } from "@/components/ui/textarea";
 import { loadWord } from "@/features/localStorage";
+import { saveFormData } from "./formData";
+import { WordFormData } from "@/features/localStorage/localStorage";
 
 type Props = {
   className?: string;
   word: string;
+  formData: WordFormData;
   onHoverChange?: (word: string | undefined) => void;
 };
 
@@ -27,10 +30,10 @@ type Props = {
 ];
 
 export const WordForm = forwardRef<HTMLFormElement, Props>(function (
-  { className, word, onHoverChange },
+  { className, word, formData, onHoverChange },
   ref
 ) {
-  const { note, selectedRegions } = loadWord(word);
+  const { note, selectedRegions } = formData;
   const hoverNodeRef = useRef<string | undefined>();
 
   return (
@@ -49,6 +52,13 @@ export const WordForm = forwardRef<HTMLFormElement, Props>(function (
                   key={id}
                   value={id}
                   aria-label={id}
+                  onClick={() => {
+                    setTimeout(() => {
+                      const formElement = (ref as any)
+                        .current as HTMLFormElement;
+                      saveFormData(formElement, word);
+                    }, 0);
+                  }}
                   onMouseEnter={() => {
                     hoverNodeRef.current = id;
                     onHoverChange?.(id);
@@ -68,6 +78,10 @@ export const WordForm = forwardRef<HTMLFormElement, Props>(function (
                 name="note"
                 defaultValue={note}
                 placeholder="Put your note here."
+                onChange={() => {
+                  const formElement = (ref as any).current as HTMLFormElement;
+                  saveFormData(formElement, word);
+                }}
               />
             </div>
           </div>
