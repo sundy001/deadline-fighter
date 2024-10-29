@@ -26,6 +26,14 @@ type Props = {
   "border-[var(--region-6)]",
   "border-[var(--region-7)]",
   "border-[var(--region-8)]",
+  "data-[state=on]:bg-[var(--region-1)]",
+  "data-[state=on]:bg-[var(--region-2)]",
+  "data-[state=on]:bg-[var(--region-3)]",
+  "data-[state=on]:bg-[var(--region-4)]",
+  "data-[state=on]:bg-[var(--region-5)]",
+  "data-[state=on]:bg-[var(--region-6)]",
+  "data-[state=on]:bg-[var(--region-7)]",
+  "data-[state=on]:bg-[var(--region-8)]",
 ];
 
 export const WordForm = forwardRef<HTMLFormElement, Props>(function (
@@ -50,7 +58,7 @@ export const WordForm = forwardRef<HTMLFormElement, Props>(function (
             >
               {REGION.map(({ id, color }) => (
                 <ToggleGroupItem
-                  className={`border-[${color}] border`}
+                  className={`border-[${color}] border data-[state=on]:text-white data-[state=on]:bg-[${color}]`}
                   key={id}
                   value={id}
                   aria-label={id}

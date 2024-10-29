@@ -97,17 +97,15 @@ export function WordList({ className, bookName, sectionName, words }: Props) {
               <tr
                 key={word.word}
                 className="odd:bg-white odd:dark:bg-gray-900 hover:bg-gray-50 border-b dark:border-gray-700"
+                tabIndex={0}
+                role="button"
+                aria-label={`View ${word.word}`}
+                onClick={() => {
+                  setSelectedWord(word);
+                  savedWordsRef.current = filteredWords;
+                }}
               >
-                <td
-                  className="px-6 py-1 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                  tabIndex={0}
-                  role="button"
-                  aria-label={`View ${word.word}`}
-                  onClick={() => {
-                    setSelectedWord(word);
-                    savedWordsRef.current = filteredWords;
-                  }}
-                >
+                <td className="px-6 py-1 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                   {word.word}
                 </td>
                 {activeTab === "All" && (

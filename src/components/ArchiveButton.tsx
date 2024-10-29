@@ -15,7 +15,8 @@ export function ArchiveButton({ word, variant, showText }: Props) {
   return (
     <Button
       variant={variant}
-      onClick={() => {
+      onClick={(event) => {
+        event.stopPropagation();
         setIsArchive(word, !isArchived);
       }}
     >
