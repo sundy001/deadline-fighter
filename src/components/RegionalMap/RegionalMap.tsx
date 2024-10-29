@@ -16,6 +16,7 @@ export function RegionalMap({ className, word, highlight }: Props) {
 
   useEffect(() => {
     (async () => {
+      setSvg(null);
       const mapSVG = await getRegionalMap(word);
       setSvg(mapSVG);
     })();

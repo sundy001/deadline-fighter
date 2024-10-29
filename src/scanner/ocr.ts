@@ -42,7 +42,7 @@ async function saveOCRCache(path: string, value: OcrSpaceResponse) {
     cachedOCRResult[path] = value;
     await writeFile(cachePath, JSON.stringify(cachedOCRResult));
   } catch (error) {
-    console.debug(error);
+    console.error(error);
   }
 }
 

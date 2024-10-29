@@ -51,10 +51,11 @@ export function RegionalChart({ word, highlight }: Props) {
 
   useEffect(() => {
     (async () => {
+      setChartData([]);
       const regionalData = await getRegionalData(word);
       setChartData(regionalData);
     })();
-  }, []);
+  }, [word]);
 
   return (
     <ChartContainer className="min-h-[200px]" config={chartConfig}>

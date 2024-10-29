@@ -7,7 +7,7 @@ export type WordFormData = {
   isArchived: boolean;
 };
 
-type StorageData = Record<string, WordFormData>;
+export type StorageData = Record<string, WordFormData>;
 
 const STORAGE_KEY = "words";
 
@@ -41,8 +41,7 @@ export function loadWord(word: string) {
 export function saveWord(word: string, data: WordFormData) {
   const words = loadWords();
   words[word] = data;
-
-  localStorage.setItem(STORAGE_KEY, compress(JSON.stringify(words)));
+  save(words);
 }
 
 export function setIsArchive(word: string, value: boolean) {
@@ -53,5 +52,30 @@ export function setIsArchive(word: string, value: boolean) {
     words[word] = { note: "", selectedRegions: [], isArchived: value };
   }
 
-  localStorage.setItem(STORAGE_KEY, compress(JSON.stringify(words)));
+  save(words);
+}
+
+type Listener = () => void;
+let listeners: Listener[] = [];
+export function subscribe(listener: Listener) {
+  listeners = [...listeners, listener];
+  return () => {
+    listeners = listeners.filter((l) => l !== listener);
+  };
+}
+
+export function getSnapshot() {
+  return loadWords();
+}
+
+function save(data: StorageData) {
+  localStorage.setItem(STORAGE_KEY, compress(JSON.stringify(data)));
+  dataCache = { ...data };
+  emitChange();
+}
+
+function emitChange() {
+  for (const listener of listeners) {
+    listener();
+  }
 }

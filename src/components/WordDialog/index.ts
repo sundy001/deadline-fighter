@@ -1,0 +1,1 @@
+export { WordDialog } from "./WordDialog";

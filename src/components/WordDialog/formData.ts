@@ -1,4 +1,4 @@
-import { loadWord, saveWord } from "@/features/localStorage";
+import { loadWord, saveWord } from "@/features/wordFormData";
 
 export function getFormData(form: HTMLFormElement) {
   const formData = new FormData(form);

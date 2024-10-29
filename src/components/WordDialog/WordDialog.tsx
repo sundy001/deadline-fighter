@@ -18,7 +18,7 @@ import { WordForm } from "./WordForm";
 import { RegionalMap } from "../RegionalMap";
 import { type AtlasResult } from "@/scanner";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { loadWord } from "@/features/localStorage/localStorage";
+import { useWordFormStore } from "@/features/wordFormData";
 
 type Props = {
   atlasResult: AtlasResult[];
@@ -39,7 +39,7 @@ export function WordDialog({
   nextWord,
   previousWord,
 }: Props) {
-  const formData = loadWord(word);
+  const formData = useWordFormStore(word);
   const formRef = useRef<HTMLFormElement>(null);
   const [hoverRegion, setHoverRegion] = useState<string | undefined>();
   const [selectedIndexes, setSelectedIndexes] = useState<number[]>([]);
@@ -112,12 +112,7 @@ export function WordDialog({
             >
               Check Page
             </Button>
-            <ArchiveButton
-              word={word}
-              variant="secondary"
-              showText={true}
-              refresh={() => {}}
-            />
+            <ArchiveButton word={word} variant="secondary" showText={true} />
             <Button
               variant="secondary"
               onClick={() => {

@@ -6,14 +6,13 @@ import { REGION } from "@/data";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { cn } from "@/utils";
 import { Textarea } from "@/components/ui/textarea";
-import { loadWord } from "@/features/localStorage";
 import { saveFormData } from "./formData";
-import { WordFormData } from "@/features/localStorage/localStorage";
+import { saveWord, WordFormData } from "@/features/wordFormData";
 
 type Props = {
   className?: string;
-  word: string;
   formData: WordFormData;
+  word: string;
   onHoverChange?: (word: string | undefined) => void;
 };
 
@@ -30,7 +29,7 @@ type Props = {
 ];
 
 export const WordForm = forwardRef<HTMLFormElement, Props>(function (
-  { className, word, formData, onHoverChange },
+  { className, formData, word, onHoverChange },
   ref
 ) {
   const { note, selectedRegions } = formData;
@@ -44,7 +43,10 @@ export const WordForm = forwardRef<HTMLFormElement, Props>(function (
             <ToggleGroup
               className="flex-wrap justify-start"
               type="multiple"
-              defaultValue={selectedRegions}
+              value={selectedRegions}
+              onValueChange={(value) => {
+                saveWord(word, { ...formData, selectedRegions: value });
+              }}
             >
               {REGION.map(({ id, color }) => (
                 <ToggleGroupItem
@@ -52,13 +54,6 @@ export const WordForm = forwardRef<HTMLFormElement, Props>(function (
                   key={id}
                   value={id}
                   aria-label={id}
-                  onClick={() => {
-                    setTimeout(() => {
-                      const formElement = (ref as any)
-                        .current as HTMLFormElement;
-                      saveFormData(formElement, word);
-                    }, 0);
-                  }}
                   onMouseEnter={() => {
                     hoverNodeRef.current = id;
                     onHoverChange?.(id);
@@ -76,7 +71,7 @@ export const WordForm = forwardRef<HTMLFormElement, Props>(function (
               <Label htmlFor="note">Note</Label>
               <Textarea
                 name="note"
-                defaultValue={note}
+                value={note}
                 placeholder="Put your note here."
                 onChange={() => {
                   const formElement = (ref as any).current as HTMLFormElement;

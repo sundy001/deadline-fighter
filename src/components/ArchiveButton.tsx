@@ -1,24 +1,22 @@
 "use client";
 import { Archive, ArchiveRestore } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { loadWord, setIsArchive } from "@/features/localStorage/localStorage";
+import { setIsArchive, useWordFormStore } from "@/features/wordFormData";
 import { type ComponentProps } from "react";
 
 type Props = {
   word: string;
   variant?: ComponentProps<typeof Button>["variant"];
   showText?: boolean;
-  refresh: () => void;
 };
 
-export function ArchiveButton({ word, variant, showText, refresh }: Props) {
-  const { isArchived } = loadWord(word);
+export function ArchiveButton({ word, variant, showText }: Props) {
+  const { isArchived } = useWordFormStore(word);
   return (
     <Button
       variant={variant}
       onClick={() => {
         setIsArchive(word, !isArchived);
-        refresh();
       }}
     >
       {isArchived ? (
